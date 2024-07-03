@@ -1,0 +1,73 @@
+{% extends 'reservation/base.html' %}
+
+{% block content %}
+
+<div class="container text-center mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <select class="form-select" id="student">
+                <option value="" disabled selected>Select Student</option>
+                {% for row in student %}
+                    <option value="{{ row.studentfirstname }} {{ row.studentlastname }}">
+                        {{ row.studentfirstname }} {{ row.studentlastname }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <select class="form-select" id="book">
+                <option value="" disabled selected>Select Book Title</option>
+                {% for row in book %}
+                    <option value="{{ row.booktitle }}">{{ row.booktitle }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" id="reserve">Reserve</button>
+    <p class="text-danger mt-2" id="errormsg"></p>
+
+    <h4 class="mt-4">Existing Book Reservations</h4>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>Student Name</th>
+                <th>Book Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in reservation %}
+                <tr>
+                    <td>{{ row.studentfirstname }} {{ row.studentlastname }}</td>
+                    <td>{{ row.booktitle }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#reserve').click(function(){
+            $.ajax({
+                url: "{% url 'savereservation' %}",
+                data: {
+                    studentname: $('#student').val(),
+                    booktitle: $('#book').val()
+                },
+                success: function(data){
+                    if(data === 'Success') {
+                        console.log('Success');
+                        window.location = "{% url 'reservation' %}";
+                    } else {
+                        $('#errormsg').html('Student has already reserved 4 books');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

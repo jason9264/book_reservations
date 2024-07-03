@@ -1,0 +1,95 @@
+{% extends 'reservation/base.html' %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="mb-4">Dashboard Overview</h2>
+    <hr>
+
+    <!-- Chart 1: Students Enrolled -->
+    <div class="chart-container mb-4">
+        <canvas id="mycanvas3"></canvas>
+    </div>
+
+    <!-- JavaScript for Chart 1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
+        integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var mychart3 = document.getElementById('mycanvas3');
+        var newchart3 = new Chart(mychart3, {
+            type: 'bar',
+            data: {
+                labels: ['Number of Students Enrolled'],
+                datasets: [{
+                    label: 'Enrolled Students',
+                    data: [{{ enrolled }}],
+                    backgroundColor: ['rgba(52, 235, 58, 0.8)']
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Chart 2: Student Class Enrollment -->
+    <div class="chart-container mb-4">
+        <canvas id="mycanvas"></canvas>
+    </div>
+
+    <!-- JavaScript for Chart 2 -->
+    <script>
+        var mychart = document.getElementById('mycanvas');
+        var newchart = new Chart(mychart, {
+            type: 'bar',
+            data: {
+                labels: ['Freshman', 'Sophomore', 'Junior', 'Senior'],
+                datasets: [{
+                    label: 'Number of Enrolled Students',
+                    data: [{{ freshman }}, {{ sophomore }}, {{ junior }}, {{ senior }}],
+                    backgroundColor: ['rgba(255, 99, 132, 0.8)', 'rgba(255, 205, 86, 0.8)', 'rgba(75, 192, 192, 0.8)', 'rgba(54, 162, 235, 0.8)']
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Chart 3: Average Student GPA -->
+    <div class="chart-container">
+        <canvas id="mycanvas2"></canvas>
+    </div>
+
+    <!-- JavaScript for Chart 3 -->
+    <script>
+        var mychart2 = document.getElementById('mycanvas2');
+        var newchart2 = new Chart(mychart2, {
+            type: 'bar',
+            data: {
+                labels: ['Average GPA'],
+                datasets: [{
+                    label: 'Average Student GPA',
+                    data: [{{ studentgpa | safe}}],
+                    backgroundColor: ['rgba(76, 52, 235, 0.8)']
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+{% endblock %}
