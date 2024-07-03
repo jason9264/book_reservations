@@ -33,7 +33,7 @@ This project is an integrative Book Reservation System built with Django. It dem
 
 1. **Clone the repository:**
    ```sh
-   git clone <(https://github.com/jason9264/book_reservations.git)>
+   git clone (https://github.com/jason9264/book_reservations.git)
    cd book-reservation-system
    ```
 
